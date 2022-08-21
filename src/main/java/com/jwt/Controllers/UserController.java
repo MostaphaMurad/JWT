@@ -31,12 +31,10 @@ import java.util.stream.Collectors;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
     private final UserServicesImp userServicesImp;
-
     public UserController(UserServicesImp userServicesImp) {
         this.userServicesImp = userServicesImp;
     }

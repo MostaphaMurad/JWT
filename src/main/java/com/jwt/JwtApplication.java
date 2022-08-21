@@ -18,7 +18,7 @@ public class JwtApplication {
     public static void main(String[] args) {
         SpringApplication.run(JwtApplication.class, args);
     }
-    @Bean
+/*    @Bean
     CommandLineRunner run(UserService userService){
         return args -> {
           userService.saveRole(new AppRole(null,"ROLE_USER"));
@@ -33,6 +33,6 @@ public class JwtApplication {
           userService.addRoleToUser("radwsayed","ROLE_ADMIN");
 
         };
-    }
+    }*/
 
 }

@@ -47,8 +47,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        http.csrf().disable();
        http.sessionManagement().sessionCreationPolicy(STATELESS);
        http.authorizeRequests().antMatchers("/login/**","/api/token/refresh/**").permitAll();
-       http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/user/**").hasAnyAuthority("ROLE_USER");
-       http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/user/save/**").hasAnyAuthority("ROLE_ADMIN","ROLE_MANAGER");
+/*
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/user/save/**").permitAll();
+*/
+
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/user/**").hasAnyAuthority("ROLE_USER");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/user/save/**").hasAnyAuthority("ROLE_ADMIN");
+
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/products/**").hasAnyAuthority("ROLE_USER");
+      http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/products/create/**").hasAnyAuthority("ROLE_ADMIN");
        http.authorizeRequests().anyRequest().authenticated();
        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
