@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -36,12 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setUserDetailsService(userDetailsService());
         return authProvider;
     }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.authenticationProvider(authenticationProvider());
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        http.csrf().disable();
@@ -50,15 +47,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 /*
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/user/save/**").permitAll();
 */
-
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/user/save/**").hasAnyAuthority("ROLE_ADMIN");
-
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/products/**").hasAnyAuthority("ROLE_USER");
-      http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/products/create/**").hasAnyAuthority("ROLE_ADMIN");
-       http.authorizeRequests().anyRequest().authenticated();
-       http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
-       http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/products/create/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().anyRequest().authenticated();
+        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
+        http.addFilterBefore(new CustomAuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
     }
     @Bean
     @Override
